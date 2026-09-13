@@ -3,16 +3,25 @@ const Repository = require("../models/repoModel");
 const User = require("../models/userModel");
 const Issue = require("../models/issueModel");
 
+// Repository.owner may be a populated User doc or a raw ObjectId depending on the query
+function getOwnerId(owner) {
+  return (owner && owner._id ? owner._id : owner).toString();
+}
+
+function isPrivateAndNotOwner(repository, req) {
+  return (
+    repository.visibility === "private" &&
+    getOwnerId(repository.owner) !== req.user.userId.toString()
+  );
+}
+
 async function createRepository(req, res) {
-  const { owner, name, issues, content, description, visibility } = req.body;
+  const { name, issues, content, description, visibility } = req.body;
+  const owner = req.user.userId;
 
   try {
     if (!name) {
       return res.status(400).json({ error: "Repository name is required" });
-    }
-
-    if (!mongoose.Types.ObjectId.isValid(owner)) {
-      return res.status(400).json({ error: "Invalid user id" });
     }
 
     if (issues && !mongoose.Types.ObjectId.isValid(issues)) {
@@ -42,7 +51,9 @@ async function createRepository(req, res) {
 
 async function getAllRepository(req, res) {
   try {
-    const repositories = await Repository.find({})
+    const repositories = await Repository.find({
+      $or: [{ visibility: "public" }, { owner: req.user.userId }],
+    })
       .populate("owner")
       .populate("issues");
 
@@ -64,6 +75,10 @@ async function fetchRepositoryById(req, res) {
       return res.status(404).json({ message: "Repository not found" });
     }
 
+    if (isPrivateAndNotOwner(repository, req)) {
+      return res.status(403).json({ message: "This repository is private" });
+    }
+
     res.status(200).json(repository);
   } catch (error) {
     console.error("Fetch repository by ID error:", error);
@@ -81,6 +96,10 @@ async function fetchRepositoryByName(req, res) {
 
     if (!repository) {
       return res.status(404).json({ message: "Repository not found" });
+    }
+
+    if (isPrivateAndNotOwner(repository, req)) {
+      return res.status(403).json({ message: "This repository is private" });
     }
 
     res.status(200).json(repository);
@@ -247,7 +266,11 @@ async function getRepositoryFiles(req, res) {
       return res.status(404).json({ error: "Repository not found" });
     }
 
-    res.status(200).json({ 
+    if (isPrivateAndNotOwner(repository, req)) {
+      return res.status(403).json({ message: "This repository is private" });
+    }
+
+    res.status(200).json({
       files: repository.files || [],
       repository: {
         id: repository._id,
@@ -269,6 +292,10 @@ async function getFileContent(req, res) {
     const repository = await Repository.findById(id);
     if (!repository) {
       return res.status(404).json({ error: "Repository not found" });
+    }
+
+    if (isPrivateAndNotOwner(repository, req)) {
+      return res.status(403).json({ message: "This repository is private" });
     }
 
     const file = repository.files?.find(f => f.path === filePath);

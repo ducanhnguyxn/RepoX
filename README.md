@@ -163,9 +163,9 @@ Required GitHub secrets: `DIGITALOCEAN_ACCESS_TOKEN`, `DOCKER_USERNAME`, `DOCKER
 
 Things I'm actively working on:
 
-- [ ] Lock down `/updateProfile/:id` and `/deleteProfile/:id` so only the owning user (or an admin) can call them
-- [ ] Enforce repo `visibility` on reads — private repos currently return their content to any authenticated user
-- [ ] Derive a repo's `owner` from the authenticated token instead of trusting the request body
+- [x] Lock down `/updateProfile/:id` and `/deleteProfile/:id` so only the owning user (or an admin) can call them
+- [x] Enforce repo `visibility` on reads — private repos no longer return their content to non-owners
+- [x] Derive a repo's `owner` from the authenticated token instead of trusting the request body
 - [ ] Add a `.env.example` for faster local setup
 - [ ] Add automated tests for the API
 - [ ] Pagination for `/allUsers`, `/repo/all`, and `/issue/all`
