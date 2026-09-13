@@ -1,0 +1,471 @@
+.repo-container {
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 2rem;
+}
+
+.repo-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 2rem;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid #e1e4e8;
+}
+
+.repo-title {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.repo-title h1 {
+  margin: 0;
+  font-size: 2rem;
+  color: #24292e;
+}
+
+.repo-logo-small {
+  width: 48px;
+  height: 48px;
+  border-radius: 6px;
+}
+
+.visibility-badge {
+  padding: 0.25rem 0.75rem;
+  border-radius: 2rem;
+  font-size: 0.875rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  border: none;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.visibility-badge.public {
+  background-color: #e6f7ff;
+  color: #0366d6;
+}
+
+.visibility-badge.public:hover {
+  background-color: #d4edda;
+}
+
+.visibility-badge.private {
+  background-color: #fff5b4;
+  color: #d73a49;
+}
+
+.visibility-badge.private:hover {
+  background-color: #f5c6cb;
+}
+
+.repo-actions {
+  display: flex;
+  gap: 0.75rem;
+}
+
+.btn-outline {
+  background-color: #fafbfc;
+  border: 1px solid #e1e4e8;
+  border-radius: 6px;
+  padding: 0.5rem 1rem;
+  font-size: 0.875rem;
+  color: #24292e;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.btn-outline:hover {
+  background-color: #f3f4f6;
+}
+
+.btn-danger {
+  background-color: #fafbfc;
+  border: 1px solid #e1e4e8;
+  border-radius: 6px;
+  padding: 0.5rem 1rem;
+  font-size: 0.875rem;
+  color: #cb2431;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.btn-danger:hover {
+  background-color: #cb2431;
+  border-color: #cb2431;
+  color: white;
+}
+
+.btn-secondary {
+  background-color: #fafbfc;
+  border: 1px solid #e1e4e8;
+  border-radius: 6px;
+  padding: 0.5rem 1rem;
+  font-size: 0.875rem;
+  color: #24292e;
+  cursor: pointer;
+}
+
+.btn-primary {
+  background-color: #2ea44f;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  padding: 0.5rem 1rem;
+  font-size: 0.875rem;
+  cursor: pointer;
+}
+
+.repo-info {
+  margin-bottom: 2rem;
+  padding: 1.5rem;
+  background-color: #f6f8fa;
+  border-radius: 6px;
+}
+
+.description-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 1rem;
+}
+
+.edit-description {
+  margin-bottom: 1rem;
+}
+
+.edit-description textarea {
+  width: 100%;
+  padding: 0.75rem;
+  border: 1px solid #e1e4e8;
+  border-radius: 6px;
+  font-size: 0.875rem;
+  resize: vertical;
+}
+
+.edit-actions {
+  display: flex;
+  gap: 0.5rem;
+  margin-top: 0.75rem;
+}
+
+.edit-btn {
+  background: none;
+  border: none;
+  color: #0366d6;
+  font-size: 0.875rem;
+  cursor: pointer;
+  padding: 0.25rem 0.5rem;
+  border-radius: 3px;
+}
+
+.edit-btn:hover {
+  background-color: #f1f3f4;
+}
+
+.repo-description {
+  margin: 0 0 1rem;
+  color: #24292e;
+  line-height: 1.6;
+}
+
+.repo-owner {
+  color: #586069;
+  font-size: 0.875rem;
+}
+
+.repo-tabs {
+  display: flex;
+  border-bottom: 1px solid #e1e4e8;
+  margin-bottom: 2rem;
+}
+
+.tab {
+  padding: 0.75rem 1rem;
+  border: none;
+  background: none;
+  cursor: pointer;
+  font-size: 0.875rem;
+  color: #586069;
+  border-bottom: 2px solid transparent;
+  transition: all 0.2s ease;
+}
+
+.tab.active {
+  color: #24292e;
+  border-bottom-color: #fd8c73;
+}
+
+.tab:hover {
+  color: #24292e;
+}
+
+.repo-content-section,
+.issues-section,
+.repo-code-section {
+  background-color: #fff;
+  border: 1px solid #e1e4e8;
+  border-radius: 6px;
+  padding: 2rem;
+}
+
+.code-management-layout {
+  display: grid;
+  grid-template-columns: 300px 1fr;
+  gap: 2rem;
+  min-height: 600px;
+}
+
+.file-tree-panel {
+  background-color: #fafbfc;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.code-editor-panel {
+  background-color: #ffffff;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.repo-content-section h3 {
+  margin-top: 0;
+  margin-bottom: 1.5rem;
+  color: #24292e;
+}
+
+.file-list {
+  border: 1px solid #e1e4e8;
+  border-radius: 6px;
+  overflow: hidden;
+  margin-bottom: 2rem;
+}
+
+.file-item {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.75rem 1rem;
+  border-bottom: 1px solid #e1e4e8;
+  transition: background-color 0.2s ease;
+}
+
+.file-item:last-child {
+  border-bottom: none;
+}
+
+.file-item:hover {
+  background-color: #f6f8fa;
+}
+
+.file-icon {
+  font-size: 1.25rem;
+}
+
+.file-name {
+  font-weight: 500;
+  color: #0366d6;
+}
+
+.add-content-section {
+  border-top: 1px solid #e1e4e8;
+  padding-top: 2rem;
+}
+
+.add-content-section h4 {
+  margin-bottom: 1rem;
+}
+
+.content-form {
+  max-width: 600px;
+}
+
+.form-group {
+  margin-bottom: 1rem;
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: 0.5rem;
+  font-weight: 600;
+  color: #24292e;
+}
+
+.form-group input,
+.form-group textarea {
+  width: 100%;
+  padding: 0.75rem;
+  border: 1px solid #e1e4e8;
+  border-radius: 6px;
+  font-size: 0.875rem;
+}
+
+.form-group textarea {
+  resize: vertical;
+}
+
+.issues-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1.5rem;
+}
+
+.new-issue-form {
+  background-color: #f6f8fa;
+  border: 1px solid #e1e4e8;
+  border-radius: 6px;
+  padding: 1.5rem;
+  margin-bottom: 2rem;
+}
+
+.new-issue-form h4 {
+  margin-top: 0;
+  margin-bottom: 1rem;
+}
+
+.form-actions {
+  display: flex;
+  gap: 0.75rem;
+  margin-top: 1rem;
+}
+
+.issues-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.issue-item {
+  border: 1px solid #e1e4e8;
+  border-radius: 6px;
+  margin-bottom: 0.75rem;
+  transition: box-shadow 0.2s ease;
+}
+
+.issue-item:hover {
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+
+.issue-link {
+  display: block;
+  padding: 1rem;
+  text-decoration: none;
+  color: inherit;
+}
+
+.issue-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 0.5rem;
+}
+
+.issue-title {
+  font-weight: 600;
+  color: #24292e;
+  margin: 0;
+}
+
+.issue-status {
+  padding: 0.25rem 0.5rem;
+  border-radius: 12px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: uppercase;
+}
+
+.issue-status.open {
+  background-color: #2ea44f;
+  color: white;
+}
+
+.issue-status.closed {
+  background-color: #cb2431;
+  color: white;
+}
+
+.issue-description {
+  color: #586069;
+  margin: 0;
+  line-height: 1.5;
+}
+
+.empty-message {
+  text-align: center;
+  color: #586069;
+  padding: 2rem;
+  font-style: italic;
+}
+
+.loading,
+.error-message {
+  text-align: center;
+  padding: 2rem;
+}
+
+.loading {
+  color: #586069;
+}
+
+.error-message {
+  color: #cb2431;
+  margin-bottom: 1rem;
+}
+
+@media (max-width: 768px) {
+  .repo-container {
+    padding: 1rem;
+  }
+
+  .repo-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 1rem;
+  }
+
+  .repo-actions {
+    width: 100%;
+    justify-content: space-between;
+  }
+
+  .repo-title {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.5rem;
+  }
+
+  .repo-title h1 {
+    font-size: 1.5rem;
+  }
+
+  .description-container {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .issues-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 1rem;
+  }
+
+  .content-form {
+    max-width: 100%;
+  }
+
+  .code-management-layout {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+    min-height: 500px;
+  }
+
+  .file-tree-panel {
+    order: 2;
+  }
+
+  .code-editor-panel {
+    order: 1;
+  }
+}
