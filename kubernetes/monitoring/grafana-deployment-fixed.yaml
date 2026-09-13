@@ -1,0 +1,43 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: grafana
+  namespace: monitoring
+  labels:
+    app: grafana
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: grafana
+  template:
+    metadata:
+      labels:
+        app: grafana
+    spec:
+      containers:
+      - name: grafana
+        image: grafana/grafana:9.5.0
+        ports:
+        - containerPort: 3000
+        env:
+        - name: GF_SECURITY_ADMIN_USER
+          value: "admin"
+        - name: GF_SECURITY_ADMIN_PASSWORD
+          value: "admin123"
+        - name: GF_USERS_ALLOW_SIGN_UP
+          value: "false"
+        - name: GF_SERVER_ROOT_URL
+          value: "https://monitoring.129.212.193.87.nip.io"
+        - name: GF_SERVER_DOMAIN
+          value: "monitoring.129.212.193.87.nip.io"
+        - name: GF_SECURITY_COOKIE_SECURE
+          value: "true"
+        - name: GF_SECURITY_COOKIE_SAMESITE
+          value: "none"
+        volumeMounts:
+        - name: grafana-storage
+          mountPath: /var/lib/grafana
+      volumes:
+      - name: grafana-storage
+        emptyDir: {}

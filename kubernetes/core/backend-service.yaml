@@ -1,0 +1,17 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: repox-backend-service
+  namespace: repox
+  labels:
+    app: repox
+    component: backend
+spec:
+  selector:
+    app: repox
+    component: backend
+  ports:
+    - protocol: TCP
+      port: 3000
+      targetPort: 3000
+  type: ClusterIP # Internal to the cluster

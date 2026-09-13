@@ -1,0 +1,17 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: repox-frontend-service
+  namespace: repox
+  labels:
+    app: repox
+    component: frontend
+spec:
+  selector:
+    app: repox
+    component: frontend
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 80
+  type: LoadBalancer # Exposes the service externally

@@ -1,0 +1,90 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: repox-backend
+  namespace: repox
+  labels:
+    app: repox
+    component: backend
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: repox
+      component: backend
+  template:
+    metadata:
+      labels:
+        app: repox
+        component: backend
+    spec:
+      imagePullSecrets:
+      - name: dockerhub-secret
+      containers:
+      - name: backend
+        image: YOUR_DOCKERHUB_USERNAME/repox-backend:latest
+        imagePullPolicy: Always
+        ports:
+        - containerPort: 3000
+        readinessProbe:
+          httpGet:
+            path: /health
+            port: 3000
+          initialDelaySeconds: 10
+          periodSeconds: 5
+        livenessProbe:
+          httpGet:
+            path: /health
+            port: 3000
+          initialDelaySeconds: 30
+          periodSeconds: 10
+        env:
+        - name: MONGO_URI
+          valueFrom:
+            secretKeyRef:
+              name: mongo-secret
+              key: mongo-uri
+        - name: JWT_SECRET_KEY
+          valueFrom:
+            secretKeyRef:
+              name: jwt-secret
+              key: jwt-secret-key
+        - name: AWS_REGION
+          valueFrom:
+            secretKeyRef:
+              name: aws-s3-secret
+              key: aws-region
+        - name: S3_BUCKET
+          valueFrom:
+            secretKeyRef:
+              name: aws-s3-secret
+              key: s3-bucket
+        - name: AWS_ACCESS_KEY_ID
+          valueFrom:
+            secretKeyRef:
+              name: aws-s3-secret
+              key: aws-access-key-id
+        - name: AWS_SECRET_ACCESS_KEY
+          valueFrom:
+            secretKeyRef:
+              name: aws-s3-secret
+              key: aws-secret-access-key
+        resources:
+          requests:
+            cpu: "50m"      
+            memory: "64Mi" 
+          limits:
+            cpu: "200m"     
+            memory: "256Mi" 
+        livenessProbe:
+          httpGet:
+            path: /health
+            port: 3000
+          initialDelaySeconds: 30  
+          periodSeconds: 30
+        readinessProbe:
+          httpGet:
+            path: /health
+            port: 3000
+          initialDelaySeconds: 10
+          periodSeconds: 15

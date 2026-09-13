@@ -1,0 +1,38 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: repox-frontend
+  namespace: repox
+  labels:
+    app: repox
+    component: frontend
+spec:
+  replicas: 1  # Starting with 1 replica
+  selector:
+    matchLabels:
+      app: repox
+      component: frontend
+  template:
+    metadata:
+      labels:
+        app: repox
+        component: frontend
+    spec:
+      imagePullSecrets:
+      - name: dockerhub-secret
+      containers:
+        - name: frontend
+          image: YOUR_DOCKERHUB_USERNAME/repox-frontend:latest
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 80
+          env:
+            - name: VITE_API_URL
+              value: "/api"
+          resources:
+            requests:
+              cpu: "25m"
+              memory: "32Mi"
+            limits:
+              cpu: "100m"
+              memory: "128Mi"
