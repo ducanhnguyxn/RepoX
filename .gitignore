@@ -1,0 +1,16 @@
+# macOS
+.DS_Store
+
+# Node dependencies
+node_modules/
+
+# Environment variables
+.env
+
+# Local CLI version-control data
+.repox/
+
+# Kubernetes secrets 
+kubernetes/core/*-secret.yaml
+!kubernetes/core/namespace.yaml
+
