@@ -29,9 +29,16 @@ async function createIssue(req, res) {
 
 async function getAllIssues(req, res) {
   try {
-    const issues = await Issue.find().populate("repository");
-    
-    res.status(200).json(issues || []);
+    const page = Math.max(parseInt(req.query.page) || 1, 1);
+    const limit = Math.min(Math.max(parseInt(req.query.limit) || 20, 1), 100);
+    const skip = (page - 1) * limit;
+
+    const [issues, total] = await Promise.all([
+      Issue.find().populate("repository").skip(skip).limit(limit),
+      Issue.countDocuments(),
+    ]);
+
+    res.status(200).json({ data: issues, page, limit, total, totalPages: Math.ceil(total / limit) });
   } catch (error) {
     console.error("Get all issues error:", error);
     res.status(500).json({ message: "Internal server error" });

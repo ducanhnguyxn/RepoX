@@ -84,8 +84,16 @@ async function login(req, res){
 
 async function getAllUsers(req, res)  {
   try {
-    const users = await User.find({}).select('-password'); // Exclude passwords
-    res.json(users);
+    const page = Math.max(parseInt(req.query.page) || 1, 1);
+    const limit = Math.min(Math.max(parseInt(req.query.limit) || 20, 1), 100);
+    const skip = (page - 1) * limit;
+
+    const [users, total] = await Promise.all([
+      User.find({}).select('-password').skip(skip).limit(limit), // Exclude passwords
+      User.countDocuments({}),
+    ]);
+
+    res.json({ data: users, page, limit, total, totalPages: Math.ceil(total / limit) });
   } catch (error) {
     console.error("Get all users error:", error);
     res.status(500).json({ message: "Internal server error" });

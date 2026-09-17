@@ -52,7 +52,7 @@ const Dashboard = () => {
         );
 
         // Filter out user's own repositories from suggestions
-        const otherRepos = allReposResponse.data.filter(
+        const otherRepos = (allReposResponse.data.data || []).filter(
           repo => repo.owner?._id !== userId && repo.visibility === 'public'
         );
         

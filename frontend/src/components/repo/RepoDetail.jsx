@@ -67,9 +67,9 @@ const RepoDetail = () => {
             Authorization: `Bearer ${token}`
           }
         });
-        
+
         // Filter issues for this repository
-        const repoIssues = response.data.filter(issue => 
+        const repoIssues = (response.data.data || []).filter(issue =>
           issue.repository && issue.repository._id === id
         );
         

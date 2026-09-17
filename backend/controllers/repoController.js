@@ -51,13 +51,24 @@ async function createRepository(req, res) {
 
 async function getAllRepository(req, res) {
   try {
-    const repositories = await Repository.find({
-      $or: [{ visibility: "public" }, { owner: req.user.userId }],
-    })
-      .populate("owner")
-      .populate("issues");
+    const page = Math.max(parseInt(req.query.page) || 1, 1);
+    const limit = Math.min(Math.max(parseInt(req.query.limit) || 20, 1), 100);
+    const skip = (page - 1) * limit;
 
-    res.status(200).json(repositories);
+    const filter = {
+      $or: [{ visibility: "public" }, { owner: req.user.userId }],
+    };
+
+    const [repositories, total] = await Promise.all([
+      Repository.find(filter)
+        .populate("owner", "-password")
+        .populate("issues")
+        .skip(skip)
+        .limit(limit),
+      Repository.countDocuments(filter),
+    ]);
+
+    res.status(200).json({ data: repositories, page, limit, total, totalPages: Math.ceil(total / limit) });
   } catch (error) {
     console.error("Get all repositories error:", error);
     res.status(500).json({ message: "Internal server error" });
@@ -68,7 +79,7 @@ async function fetchRepositoryById(req, res) {
   const repoID = req.params.id;
   try {
     const repository = await Repository.findById(repoID)
-      .populate("owner")
+      .populate("owner", "-password")
       .populate("issues");
 
     if (!repository) {
@@ -91,7 +102,7 @@ async function fetchRepositoryByName(req, res) {
   const repoName = req.params.name; 
   try {
     const repository = await Repository.findOne({ name: repoName })
-      .populate("owner")
+      .populate("owner", "-password")
       .populate("issues");
 
     if (!repository) {
@@ -115,7 +126,7 @@ async function fetchRepositoryForCurrentUser(req, res) {
 
   try {
     const repositories = await Repository.find({ owner: userId })
-      .populate("owner")
+      .populate("owner", "-password")
       .populate("issues");
 
     if (!repositories || repositories.length === 0) {
@@ -261,7 +272,7 @@ async function getRepositoryFiles(req, res) {
   const { id } = req.params;
 
   try {
-    const repository = await Repository.findById(id).populate("owner");
+    const repository = await Repository.findById(id).populate("owner", "-password");
     if (!repository) {
       return res.status(404).json({ error: "Repository not found" });
     }
