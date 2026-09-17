@@ -109,7 +109,7 @@ node index.js revert --commitId abc123     # revert to a previous commit
 
 ## API Reference
 
-All routes are relative to `http://localhost:3000`.
+All routes are relative to `http://localhost:3000`. The three "list all" routes (`/allUsers`, `/repo/all`, `/issue/all`) accept `?page` and `?limit` query params (default `page=1`, `limit=20`, max `limit=100`) and return `{ data, page, limit, total, totalPages }`.
 
 **Users**
 | Method | Route                | Description            |
@@ -166,6 +166,8 @@ Things I'm actively working on:
 - [x] Lock down `/updateProfile/:id` and `/deleteProfile/:id` so only the owning user (or an admin) can call them
 - [x] Enforce repo `visibility` on reads — private repos no longer return their content to non-owners
 - [x] Derive a repo's `owner` from the authenticated token instead of trusting the request body
-- [ ] Add a `.env.example` for faster local setup
+- [x] Fix swapped `ref` targets in the `User` schema
+- [x] Add a `.env.example` for faster local setup
+- [x] Pagination for `/allUsers`, `/repo/all`, and `/issue/all`
+- [x] Stop leaking the owner's password hash on populated repo responses
 - [ ] Add automated tests for the API
-- [ ] Pagination for `/allUsers`, `/repo/all`, and `/issue/all`
